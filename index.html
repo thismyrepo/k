@@ -5,7 +5,6 @@
 <title>Things This Is Not</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<!-- iOS Safari fullscreen theme -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#3a071a">
@@ -14,18 +13,17 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100vh;
   width: 100vw;
+  height: 100%;
+  overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: #f3f3f3;
-  overflow: hidden;
   background: radial-gradient(circle at top, #f3b4c6 0%, #c84d7c 35%, #7a1236 70%, #3a071a 100%);
   background-size: cover;
-  background-repeat: no-repeat;
   -webkit-font-smoothing: antialiased;
 }
 
-/* subtle animated grain overlay */
+/* subtle grain overlay */
 body::before {
   content: "";
   position: fixed;
@@ -71,11 +69,11 @@ body::before {
   to { transform: translateY(-20vh) rotate(45deg); opacity: 0; }
 }
 
-/* main container */
+/* container using dynamic --vh for full screen */
 .container {
   position: relative;
   z-index: 1;
-  height: 100%;
+  height: var(--vh, 100vh);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -177,6 +175,16 @@ li:nth-child(3) { animation-delay: 3.4s; }
     Happy Valentine’s Day
   </div>
 </div>
+
+<script>
+// Fix iPhone 100vh issue
+function setVh() {
+  document.documentElement.style.setProperty('--vh', window.innerHeight + 'px');
+}
+window.addEventListener('resize', setVh);
+window.addEventListener('orientationchange', setVh);
+setVh();
+</script>
 
 </body>
 </html>
